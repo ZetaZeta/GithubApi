@@ -31,6 +31,7 @@ public class UserDataHandler {
 
         Mono<GithubUserResponse> userMono = githubClient.getUser(username);
         Mono<List<GithubRepoResponse>> repoMono = githubClient.getRepos(username);
+
         return Mono.zip(repoMono, userMono, (r, u) -> {
            userData.setUserData(u);
            userData.setRepos(r);
