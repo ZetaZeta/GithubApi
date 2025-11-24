@@ -7,25 +7,14 @@ To install and run:
 "gradlew test" to run tests
 (Or just "gradle" if gradle is already installed.)
 
-I generally tried to keep things as simple as possible, while using a structure
-that would allow for later expansion. The client, endpoint controller / handler,
-and models are separated out to allow for later expansion and easy reuse.
+I generally tried to keep things as simple as possible, while using a structure that would allow for later expansion. The client, endpoint controller / handler, and models are separated out to allow for later expansion and easy reuse.
 
-The models contain a lot of fields we don't yet need; my experience from working on integrations is that
-it's better to go with more comprehensive models when it's easy to do so, since that makes future
-expansion easier by making it more clear what info the endpoint provides.
+The models contain a lot of fields we don't yet need; my experience from working on integrations is that it's better to go with more comprehensive models when it's easy to do so, since that makes future expansion easier by making it more clear what info the endpoint provides.
 
-The use of reactive programming is probably not strictly necessary in a tiny test program,
-and it does complicate the code slightly; we may gain a tiny sliver of time by running the
-two requests to GitHub in parallel, but not much. But it helps this structure scale up if
-later expanded on.
+The use of reactive programming is probably not strictly necessary in a tiny test program, and it does complicate the code slightly; we may gain a tiny sliver of time by running the two requests to GitHub in parallel, but not much. But it helps this structure scale up if later expanded on.
 
 Some shortcuts taken for time:
-- Used a single type of end-to-end test to test live calls to Github, making one-button tests for everything easier.
-  In actual production this would be broken up and server would be mocked for unit tests, with
-  end-to-end testing being done elsewhere.
-- com.combiner.githubapi.TestUtils just has the JSON inline rather than loading it from a file.
-  Ideally I'd have the TestUtils designed to pull test jsons out of an resource folder of test jsons.
-- The error handling currently just relays the error from Github, with its error code; this makes sense for the most likely errors
-(eg. 404) but some of them would probably want some detailed handling and logging.
+- Used a single type of end-to-end test to test live calls to Github, making one-button tests for everything easier. In actual production this would be broken up and server would be mocked for unit tests, with end-to-end testing being done elsewhere.
+- com.combiner.githubapi.TestUtils just has the JSON inline rather than loading it from a file. Ideally I'd have the TestUtils designed to pull test jsons out of an resource folder of test jsons.
+- The error handling currently just relays the error from Github, with its error code; this makes sense for the most likely error (eg. 404) but some of them would probably want some detailed handling and logging.
 - The cache is just a basic default cache in memory.
